@@ -1,4 +1,4 @@
-test_root_folder = "D:\\Amber\\Multimodel Root\\CancelableTemplate_girls\\output_dataset\\test"
+test_root_folder = "D:\\Amber\\Multimodel Root\\CancelableTemplate\\output_dataset\\test"
 threshold=0.6
 tz=64
 number_of_user=100
