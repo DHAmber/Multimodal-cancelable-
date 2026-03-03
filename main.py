@@ -4,6 +4,12 @@ from utility import *
 import numpy as np
 from biometric.multimodel import authenticate
 
+finger_data = np.load("finger_features.npz")
+finger_features_raw = finger_data['features']
+finger_labels_raw = finger_data['labels']
+
+
+
 face_data = np.load("face_features.npz")
 face_features_raw = face_data['features']
 face_labels_raw = face_data['labels']
