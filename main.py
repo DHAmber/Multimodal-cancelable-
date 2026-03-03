@@ -4,11 +4,9 @@ from utility import *
 import numpy as np
 from biometric.multimodel import authenticate
 
-finger_data = np.load("finger_features.npz")
-finger_features_raw = finger_data['features']
-finger_labels_raw = finger_data['labels']
-
-
+fingerprint_data = np.load("fingerprint_features.npz")
+fingerprint_features_raw = fingerprint_data['features']
+fingerprint_labels_raw = fingerprint_data['labels']
 
 face_data = np.load("face_features.npz")
 face_features_raw = face_data['features']
@@ -23,17 +21,17 @@ sig_fatures_raw = sig_data['features']
 sig_labels_raw = sig_data['labels']
 
 
-
+fingerprint_features, fingerprint_labels = group_features_by_user(fingerprint_features_raw, fingerprint_labels_raw)
 face_features, face_labels = group_features_by_user(face_features_raw, face_labels_raw)
 iris_features, iris_labels = group_features_by_user(iris_fatures_raw, iris_labels_raw)
 sig_features, sig_labels = group_features_by_user(sig_fatures_raw, sig_labels_raw)
 
-def fuse_features(iris_features, sig_features, face_features):
+def fuse_features(fingerprint_feeatures, iris_features, sig_features, face_features):
     try:
         #iris_features = normalize(iris_features, axis=1)
         #fingerprint_features = normalize(fingerprint_features, axis=1)
         #face_features = normalize(face_features, axis=1)
-        fused_features = np.concatenate([face_features,iris_features, sig_features], axis=1)
+        fused_features = np.concatenate([fingerprint_features,face_features,iris_features, sig_features], axis=1)
         return fused_features
     except Exception as e:
         print(e)
@@ -72,7 +70,7 @@ def enroll():
     # iris_featur = iris_features.reshape(100, 512)
     # sig_featur = sig_features.reshape(100, 512)
 
-    fused_features = fuse_features(iris_features, sig_features, face_features)
+    fused_features = fuse_features(fingerprint_features, iris_features, sig_features, face_features)
 
     for feature in fused_features:
         total_elements = feature.size
